@@ -13,6 +13,6 @@ void readInfrared(){
   Serial.print(", IR_3 is: ");
   Serial.print(IRvalue3);
   Serial.print(", IR_4 is: ");
-  Serial.print(IRvalue4);
+  Serial.println(IRvalue4);
 
 }
