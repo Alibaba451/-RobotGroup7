@@ -4,6 +4,7 @@ float motor2Multiplier = 1.0;
 
 //Create motorControl function 
 void motorControl(int speed1, int speed2) { 
+  
 //Apply the motor multipliers to the motor speed
 int adjustedSpeed1 = speed1 * motor1Multiplier;
 int adjustedSpeed2 = speed2 * motor2Multiplier;

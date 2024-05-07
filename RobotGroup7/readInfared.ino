@@ -1,4 +1,5 @@
 void readInfrared(){
+  
   //Read values from infrared sensors
   int IRvalue1 = digitalRead(IR_1);
   int IRvalue2 = digitalRead(IR_2);

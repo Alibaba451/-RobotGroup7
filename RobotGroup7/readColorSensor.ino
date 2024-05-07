@@ -2,7 +2,8 @@
 tcs3200 tcs(COLOR_0, COLOR_1, COLOR_2, COLOR_3, COLOR_OUT);
 
 //Function to read the color sensor
-void readColorSensor() {
+void readColorSensor() {  
+  
   //Variable Sample set as 5 (Read each color 5 times for greater accuracy)
   const int samples = 5; 
   

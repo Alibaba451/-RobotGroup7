@@ -24,6 +24,10 @@
 #define  MOTOR_PIN3 6
 #define  MOTOR_PIN4 9
 
+//Define Trig and Echo Pins for Ultrasonic Sensor
+#define TRIG_PIN 10
+#define ECHO_PIN 11
+
 
 //Declare global variable called irSensorMillis
 unsigned long irSensorMillis = 0;
@@ -31,8 +35,12 @@ unsigned long irSensorMillis = 0;
 //Declare global variable to track the reporting period of the color sensor
 unsigned long colorSensorMillis = 0;
 
+//Declare global variable ultraSonicMillis
+unsigned long ultraSonicMillis = 0; 
+
 //Main Setup
 void setup() {
+
 //Serial Begin at 9600 Baud Rate
 Serial.begin(9600);
 
@@ -47,10 +55,16 @@ pinMode(MOTOR_PIN1, OUTPUT);
 pinMode(MOTOR_PIN2, OUTPUT);
 pinMode(MOTOR_PIN3, OUTPUT);
 pinMode(MOTOR_PIN4, OUTPUT);
+
+//Declare Trig and Echo pins as OUTPUT and INPUT
+pinMode(TRIG_PIN, OUTPUT);
+pinMode(ECHO_PIN, INPUT);
+
 }
 
 //Main Loop
 void loop() {
+
 //Return the current run time in milliseconds
 unsigned long currentMillis = millis();
 
@@ -68,15 +82,19 @@ if (currentMillis - colorSensorMillis >= 250) {
 
 }
 
+//If statement to read the Ultrasonic Sensor every 500 ms
+if (currentMillis - ultraSonicMillis >= 500) {
+  ultraSonicMillis = currentMillis;
+  readUltrasonicSensor();
+}
+
 //Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
 motorControl(255, 255); //Move forward
 delay(1000); 
-Serial.println("FORWARD");
 motorControl(0, 0); //Stop
 delay(100);
 motorControl(255, -255); //Turn Right
 delay(400);
-Serial.println("TURN RIGHT");
 motorControl(0, 0); //Stop
 delay(100);
 
