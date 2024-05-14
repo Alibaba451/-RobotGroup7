@@ -38,6 +38,9 @@ unsigned long colorSensorMillis = 0;
 //Declare global variable ultraSonicMillis
 unsigned long ultraSonicMillis = 0; 
 
+//Declare global variable 
+String currentState = "Null";
+
 //Main Setup
 void setup() {
 
@@ -88,7 +91,7 @@ if (currentMillis - ultraSonicMillis >= 500) {
   readUltrasonicSensor();
 }
 
-//Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
+/* Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
 motorControl(255, 255); //Move forward
 delay(1000); 
 motorControl(0, 0); //Stop
@@ -96,6 +99,10 @@ delay(100);
 motorControl(255, -255); //Turn Right
 delay(400);
 motorControl(0, 0); //Stop
-delay(100);
+delay(100); 
+*/
 
+//Call robot logic function to run in stragiht line
+robotLogic();
 }
+
