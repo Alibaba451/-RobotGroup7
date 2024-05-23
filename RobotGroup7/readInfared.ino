@@ -1,5 +1,6 @@
-int* readInfrared(){
-  static int IRvalues[4]; //Static array to hold the IR sensor values
+int* readInfrared() {
+
+  static int IRvalues[4];  //Static array to hold the IR sensor values
 
   //Read values from infrared sensors
   IRvalues[0] = digitalRead(IR_1);
@@ -17,5 +18,5 @@ int* readInfrared(){
   Serial.print(", IR_4: ");
   Serial.println(IRvalues[3]);
 
-  return IRvalues; // Return the array of IR sensor values
+  return IRvalues;  // Return the array of IR sensor values
 }

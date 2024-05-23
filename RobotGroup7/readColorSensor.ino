@@ -2,11 +2,11 @@
 tcs3200 tcs(COLOR_0, COLOR_1, COLOR_2, COLOR_3, COLOR_OUT);
 
 //Function to read the color sensor
-void readColorSensor() {  
-  
+void readColorSensor() {
+
   //Variable Sample set as 5 (Read each color 5 times for greater accuracy)
-  const int samples = 5; 
-  
+  const int samples = 5;
+
   //Declare long variables for each color to take in large numbers representing each color
   long sumRed = 0, sumGreen = 0, sumBlue = 0, sumWhite = 0;
 
@@ -16,7 +16,6 @@ void readColorSensor() {
     sumGreen += tcs.colorRead('g');
     sumBlue += tcs.colorRead('b');
     sumWhite += tcs.colorRead('c');
-
   }
 
   //Divide the sum of the 5 iterations of color sensor values by the sample number (5) to get accurate average
@@ -35,5 +34,4 @@ void readColorSensor() {
   Serial.print(avgBlue);
   Serial.print(" W(clear)= ");
   Serial.println(avgWhite);
-  
 }
