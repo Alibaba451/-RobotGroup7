@@ -5,7 +5,8 @@
 //Include TSC3200 library
 #include <tcs3200.h>
 
-
+//Include Wifi Driver
+#include <WiFiNINA.h>
 
 //Define Color Sensors as Analog Pins
 #define COLOR_0 A0
@@ -66,6 +67,11 @@ void setup() {
   //Serial Begin at 9600 Baud Rate
   Serial.begin(115200);
 
+  //Setup onboard RGB LED pins
+  WiFiDrv::pinMode(LED_R, OUTPUT);  //Red LED defined
+  WiFiDrv::pinMode(LED_G, OUTPUT);  //Green LED defined
+  WiFiDrv::pinMode(LED_B, OUTPUT);  //Blue LED defined
+
   //Declare Infared Pins as INPUT
   pinMode(IR_1, INPUT);
   pinMode(IR_2, INPUT);
@@ -86,45 +92,46 @@ void setup() {
 //Main Loop
 void loop() {
 
+  //Write the RGB values of the LED
+  WiFiDrv::analogWrite(25, 255);
+  WiFiDrv::analogWrite(26, 255);
+  WiFiDrv::analogWrite(27, 255);
+
   //Return the curren t run time in milliseconds
   currentMillis = millis();
 
   Serial.println(currentMillis);
 
- Serial.print(currentState); 
- 
-//Check the states of the IR sensors every 500 Milliseconds
-if (currentMillis - irSensorMillis >= 500) {
-  irSensorMillis = currentMillis;
-  readInfrared();
+  Serial.println(currentState);
 
-}
+  //Check the states of the IR sensors every 500 Milliseconds
+  if (currentMillis - irSensorMillis >= 500) {
+    irSensorMillis = currentMillis;
+    readInfrared();
+  }
 
-/*
-//If statement to read the color sensor at set intervals (every 250 ms), Should also see output in the serial monitor with the colors
-if (currentMillis - colorSensorMillis >= 250) {
-  colorSensorMillis = currentMillis;
-  readColorSensor();
+  //If statement to read the color sensor at set intervals (every 250 ms), Should also see output in the serial monitor with the colors
+  if (currentMillis - colorSensorMillis >= 250) {
+    colorSensorMillis = currentMillis;
+    readColorSensor();
+  }
 
-} */
+  //If statement to read the Ultrasonic Sensor every 500 ms
+  if (currentMillis - ultraSonicMillis >= 20) {
+    ultraSonicMillis = currentMillis;
+    readUltrasonicSensor();
+  }
 
-
-//If statement to read the Ultrasonic Sensor every 500 ms
-if (currentMillis - ultraSonicMillis >= 20) {
-  ultraSonicMillis = currentMillis;
-  readUltrasonicSensor();
-} 
-
-/*Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
-motorControl(255, 255); //Move forward
-delay(1000); 
-motorControl(0, 0); //Stop
-delay(100);
-motorControl(255, -255); //Turn Right
-delay(400);
-motorControl(0, 0); //Stop
-delay(100); 
-*/
+  /*Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
+  motorControl(255, 255); //Move forward
+  delay(1000); 
+  motorControl(0, 0); //Stop
+  delay(100);
+  motorControl(255, -255); //Turn Right
+  delay(400);
+  motorControl(0, 0); //Stop
+  delay(100); 
+  */
 
   //Call robot logic function to run in stragiht line
   robotLogic();

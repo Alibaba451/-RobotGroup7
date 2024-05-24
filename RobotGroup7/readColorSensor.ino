@@ -1,6 +1,8 @@
 //Create a tcs3200 object and assign the analog color pins to it
 tcs3200 tcs(COLOR_0, COLOR_1, COLOR_2, COLOR_3, COLOR_OUT);
 
+String colorState = "";
+
 //Function to read the color sensor
 void readColorSensor() {
 
@@ -34,4 +36,9 @@ void readColorSensor() {
   Serial.print(avgBlue);
   Serial.print(" W(clear)= ");
   Serial.println(avgWhite);
+
+  return avgRed;
+  return avgGreen;
+  return avgBlue;
+  return avgWhite;
 }
