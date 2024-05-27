@@ -61,6 +61,12 @@ unsigned long ultraSonicMillis = 0;
 //Declare global variable
 unsigned long currentDistance = 1000;
 
+//Declare Global Variables to hold average color values
+int avgRed = 0;
+int avgGreen = 0;
+int avgBlue = 0;
+int avgWhite = 0;
+
 //Main Setup
 void setup() {
 
@@ -92,11 +98,6 @@ void setup() {
 //Main Loop
 void loop() {
 
-  //Write the RGB values of the LED
-  WiFiDrv::analogWrite(25, 255);
-  WiFiDrv::analogWrite(26, 255);
-  WiFiDrv::analogWrite(27, 255);
-
   //Return the curren t run time in milliseconds
   currentMillis = millis();
 
@@ -120,6 +121,12 @@ void loop() {
   if (currentMillis - ultraSonicMillis >= 20) {
     ultraSonicMillis = currentMillis;
     readUltrasonicSensor();
+  }
+
+  //If statement to read the color sensor at set intervals and display the color on the RGB LED
+  if (currentMillis - colorSensorMillis >= 250) {
+    colorSensorMillis = currentMillis;
+    checkColor();
   }
 
   /*Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right

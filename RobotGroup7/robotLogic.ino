@@ -24,8 +24,10 @@ void robotLogic() {
 //Motor Logic function
 void motorLogic() {
 
+
   int* IRvalues;
   IRvalues = readInfrared();  // This will point to the array of sensor values
+
 
   // Apply robot logic based on sensor readings and turning flags
   if (!isTurning && !wallDetected) {
@@ -53,21 +55,23 @@ void motorLogic() {
   } else if (isTurning && !wallDetected) {
 
     // Handle the turning based on the direction determined
+
     if (initialForwardMotion) {
       motorControl(200, 200);  // Continue moving forward for the initial duration
       currentState = "Bumping Out...";
       delay(initialMotionDuration);
-      initialForwardMotion = false;  // Entd initial forward motion after duration
+      initialForwardMotion = false;  // End initial forward motion after duration
 
     } else {
+
       if (turnDirection == "left") {
+
         if (currentMillis - turnStartTime >= initialTurnDuration && IRvalues[2] == 1) {
           Serial.println("Detected Center IR Sensor after initial turn duration");
           isTurning = false;   // Stop turning if IR2 detects the line again
           motorControl(0, 0);  // Adjust to move forward or stop
           currentState = "Turning Left - Next Line Detected";
           motorControl(turnSpeed, -turnSpeed);  // Counterbalance
-
           delay(50);
           motorControl(0, 0);
           delay(50);
@@ -76,7 +80,9 @@ void motorLogic() {
           motorControl(-turnSpeed, turnSpeed);  // Continue turning left
           currentState = "Turning Left - No Line Yet Detected";
         }
+
       } else if (turnDirection == "right") {
+
         if (currentMillis - turnStartTime >= initialTurnDuration && IRvalues[1] == 1) {
           Serial.println("Detected Center IR Sensor");
           isTurning = false;  // Stop turning if IR3 detects the line again
@@ -86,7 +92,9 @@ void motorLogic() {
           motorControl(0, 0);
           delay(50);
           currentState = "Forward";
+
         } else {
+
           motorControl(turnSpeed, -turnSpeed);  // Continue turning right
           currentState = "Turning Right - No Line Yet Detected";
         }
@@ -94,7 +102,9 @@ void motorLogic() {
     }
 
     // Turn that is triggered by detecting a wall
+
   } else if (isTurning && wallDetected) {
+
     if (initialForwardMotion) {
       motorControl(-200, -200);  // Continue moving forward for the initial duration
       currentState = "Stopping...";
@@ -102,7 +112,7 @@ void motorLogic() {
       initialForwardMotion = false;  // End initial forward motion after duration
     } else {
       // Turn left
-      if (currentMillis && IRvalues[2] == 1) {
+      if (currentMillis - turnStartTime >= initialTurnDuration && IRvalues[2] == 1) {
         Serial.println("Detected Center IR Sensor after initial turn duration");
         isTurning = false;  // Stop turning if IR2 detects the line again
         currentState = "Turning Left - Next Line Detected";
@@ -129,7 +139,7 @@ void turnLogic() {
   // Print the read values to the serial monitor
 
   // Check to see if a wall has been detected
-  if (currentDistance < 8 && wallDetected == false) {
+  if (currentDistance < 5 && wallDetected == false) {
     isTurning = true;
     wallDetected = true;
     turnStartTime = currentMillis;
