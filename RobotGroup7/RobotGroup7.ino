@@ -118,16 +118,13 @@ void loop() {
   }
 
   //If statement to read the Ultrasonic Sensor every 500 ms
-  if (currentMillis - ultraSonicMillis >= 20) {
+  if (currentMillis - ultraSonicMillis >= 15) {
     ultraSonicMillis = currentMillis;
     readUltrasonicSensor();
   }
 
-  //If statement to read the color sensor at set intervals and display the color on the RGB LED
-  if (currentMillis - colorSensorMillis >= 250) {
-    colorSensorMillis = currentMillis;
-    checkColor();
-  }
+checkColor();
+  
 
   /*Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
   motorControl(255, 255); //Move forward
