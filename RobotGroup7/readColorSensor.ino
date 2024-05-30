@@ -13,17 +13,19 @@ void readColorSensor() {
 
   //Run the for loop 5 times to read the color sensor values, adding the value each time
   for (int i = 0; i < samples; i++) {
+
     sumRed += tcs.colorRead('r');
     sumGreen += tcs.colorRead('g');
     sumBlue += tcs.colorRead('b');
     sumWhite += tcs.colorRead('c');
+
   }
 
   //Divide the sum of the 5 iterations of color sensor values by the sample number (5) to get accurate average
-  int avgRed = sumRed / samples;
-  int avgGreen = sumGreen / samples;
-  int avgBlue = sumBlue / samples;
-  int avgWhite = sumWhite / samples;
+  avgRed = sumRed / samples;
+  avgGreen = sumGreen / samples;
+  avgBlue = sumBlue / samples;
+  avgWhite = sumWhite / samples;
 
   //Serial print the average color sensor readings
   Serial.print("Average Color Sensor Readings: ");
@@ -35,9 +37,5 @@ void readColorSensor() {
   Serial.print(avgBlue);
   Serial.print(" W(clear)= ");
   Serial.println(avgWhite);
-
-  return avgRed;
-  return avgGreen;
-  return avgBlue;
-  return avgWhite;
+  
 }

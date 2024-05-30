@@ -19,4 +19,5 @@ int* readInfrared() {
   Serial.println(IRvalues[3]);
 
   return IRvalues;  // Return the array of IR sensor values
+  
 }

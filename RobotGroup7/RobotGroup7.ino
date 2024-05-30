@@ -36,13 +36,19 @@
 #define LED_G 26
 #define LED_B 27
 
-//Turning Logic
+//State turn direction state variable to keep track of each turn direction
 String turnDirection = "";
+
+//State last turn direction as a string to remember the last turn
 String lastTurnDirection = "";
+
+//boolean variable as global variable to keep track of turning state
 bool isTurning = false;
+
+//boolean variable as global variable to keep track of if a wall was detected
 bool wallDetected = false;
 
-//State Logic
+//State a global variable as a flag to track the current state of the robot.
 String currentState = "Null";
 String oldCurrentState = "Null";
 
@@ -61,22 +67,22 @@ unsigned long ultraSonicMillis = 0;
 //Declare global variable
 unsigned long currentDistance = 1000;
 
-//Declare Global Variables to hold average color values
-int avgRed = 0;
-int avgGreen = 0;
-int avgBlue = 0;
-int avgWhite = 0;
+//Declare the average color sensor readings as global variables
+int avgRed;
+int avgGreen;
+int avgBlue;
+int avgWhite;
 
 //Main Setup
 void setup() {
 
-  //Serial Begin at 9600 Baud Rate
+  //Serial Begin at 115200 Baud Rate
   Serial.begin(115200);
 
   //Setup onboard RGB LED pins
   WiFiDrv::pinMode(LED_R, OUTPUT);  //Red LED defined
   WiFiDrv::pinMode(LED_G, OUTPUT);  //Green LED defined
-  WiFiDrv::pinMode(LED_B, OUTPUT);  //Blue LED defined
+  WiFiDrv::pinMode(LED_B, OUTPUT);  //Blue L ED defined
 
   //Declare Infared Pins as INPUT
   pinMode(IR_1, INPUT);
@@ -93,50 +99,49 @@ void setup() {
   //Declare Trig and Echo pins as OUTPUT and INPUT
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
+
 }
 
 //Main Loop
 void loop() {
 
-  //Return the curren t run time in milliseconds
+  //Return the current run time in milliseconds
   currentMillis = millis();
 
+  //Serial print the time running in serial monitor to troubleshoot for delays
   Serial.println(currentMillis);
 
+  //Serial print the current state of the robot to troubleshoot for turnlogic
   Serial.println(currentState);
 
   //Check the states of the IR sensors every 500 Milliseconds
   if (currentMillis - irSensorMillis >= 500) {
+
     irSensorMillis = currentMillis;
     readInfrared();
+
   }
 
   //If statement to read the color sensor at set intervals (every 250 ms), Should also see output in the serial monitor with the colors
   if (currentMillis - colorSensorMillis >= 250) {
+    
     colorSensorMillis = currentMillis;
     readColorSensor();
+
   }
 
   //If statement to read the Ultrasonic Sensor every 500 ms
   if (currentMillis - ultraSonicMillis >= 15) {
+
     ultraSonicMillis = currentMillis;
     readUltrasonicSensor();
+
   }
 
-checkColor();
-  
+  //Call checkColor function to read the RGB LED
+  checkColor();
 
-  /*Motor Control Test Routine, move forward for 1 second, and than turn 90 degrees right
-  motorControl(255, 255); //Move forward
-  delay(1000); 
-  motorControl(0, 0); //Stop
-  delay(100);
-  motorControl(255, -255); //Turn Right
-  delay(400);
-  motorControl(0, 0); //Stop
-  delay(100); 
-  */
-
-  //Call robot logic function to run in stragiht line
+  //Call robot logic function to run in stragiht line with motorlogic and turn with turnlogic
   robotLogic();
+
 }
