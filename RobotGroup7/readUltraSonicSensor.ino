@@ -2,7 +2,7 @@
 
 //Function to Send out and recieve signals from Echo and Trig pins to read distance
 void readUltrasonicSensor() {
-  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 long duration, distance;
   //Send out signal from Trigger pin by setting it high
   digitalWrite(TRIG_PIN, LOW);

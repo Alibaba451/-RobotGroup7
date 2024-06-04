@@ -64,6 +64,9 @@ unsigned long colorSensorMillis = 0;
 //Declare global variable ultraSonicMillis
 unsigned long ultraSonicMillis = 0;
 
+//Declare global variable ultraSonicMillis
+unsigned long RGBMillis = 0;
+
 //Declare global variable
 unsigned long currentDistance = 1000;
 
@@ -99,7 +102,6 @@ void setup() {
   //Declare Trig and Echo pins as OUTPUT and INPUT
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
-
 }
 
 //Main Loop
@@ -119,29 +121,31 @@ void loop() {
 
     irSensorMillis = currentMillis;
     readInfrared();
-
   }
 
   //If statement to read the color sensor at set intervals (every 250 ms), Should also see output in the serial monitor with the colors
   if (currentMillis - colorSensorMillis >= 250) {
-    
+
     colorSensorMillis = currentMillis;
     readColorSensor();
-
   }
 
-  //If statement to read the Ultrasonic Sensor every 500 ms
+  //If statement to read the Ultrasonic Sensor every 15 ms
   if (currentMillis - ultraSonicMillis >= 15) {
 
     ultraSonicMillis = currentMillis;
     readUltrasonicSensor();
-
   }
 
-  //Call checkColor function to read the RGB LED
-  checkColor();
+  //If statement to Display color to the RGB LEDs every 500 ms
+  if (currentMillis - RGBMillis >= 500) {
+
+    RGBMillis = currentMillis;
+    //Call checkColor function to read the RGB LED
+    checkColor();
+  }
+
 
   //Call robot logic function to run in stragiht line with motorlogic and turn with turnlogic
   robotLogic();
-
 }
